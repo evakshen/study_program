@@ -231,7 +231,7 @@ void pc_temperature_read(int *temp_cpu0, int *temp_cpu1)
     }
 }
 
-#elif defined __linux
+#elif defined __linux__
 
 #include <errno.h>
 #include <unistd.h>

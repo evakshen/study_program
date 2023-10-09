@@ -1,29 +1,19 @@
 #include <stdio.h>
 
-static int GetSize(const char *text)
-{
-    int ret = 0;
-
-    while ('\0' != *(text + ret))
-    {
-        ret++;
-    }
-
-    return (ret);
-}
-
 static void GetNext(const char *pattern, int p_len, int *next)
 {
     int i = 0;
     int j = -1;
 
     next[0] = -1;
+
     while (i < p_len)
     {
         if ((-1 == j) || (pattern[i] == pattern[j]))
         {
             i++;
             j++;
+
             if (pattern[i] != pattern[j])
             {
                 next[i] = j;
@@ -44,16 +34,25 @@ int IndexKMP(const char *text, const char *pattern)
 {
     int i = 0, j = 0;
     int s_len = 0, p_len = 0;
-    int next[4096] = {0};
+    int next[2048] = {0};
     int ret = -1;
 
     if ((NULL != text) && (NULL != pattern))
     {
-        s_len = GetSize(text);
-        p_len = GetSize(pattern);
+        while ('\0' != text[s_len])
+        {
+            s_len++;
+        }
+
+        while ('\0' != pattern[p_len])
+        {
+            p_len++;
+        }
+
         if (p_len <= sizeof(next))
         {
             GetNext(pattern, p_len, next);
+
             while ((i < s_len) && (j < p_len))
             {
                 if ((-1 == j) || (text[i] == pattern[j]))
@@ -66,6 +65,7 @@ int IndexKMP(const char *text, const char *pattern)
                     j = next[j];
                 }
             }
+
             if (j == p_len)
             {
                 ret = i - j;
@@ -83,6 +83,7 @@ int main(void)
     int idx = 0;
 
     idx = IndexKMP(text, pattern);
+
     printf("×Ö·û´®Î»ÖÃ:%d\n", idx);
     if (idx >= 0)
     {
