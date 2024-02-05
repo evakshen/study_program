@@ -71,6 +71,14 @@ int IndexKMP(const char *text, const char *pattern)
                 ret = i - j;
             }
         }
+        else
+        {
+            ret = -2;
+        }
+    }
+    else
+    {
+        ret = -3;
     }
 
     return (ret);
