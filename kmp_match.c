@@ -49,7 +49,7 @@ int IndexKMP(const char *text, const char *pattern)
             p_len++;
         }
 
-        if (p_len <= sizeof(next))
+        if (p_len <= (sizeof(next) / sizeof(next[0])))
         {
             GetNext(pattern, p_len, next);
 
